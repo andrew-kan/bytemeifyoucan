@@ -5,7 +5,7 @@ import email
 import sys
 from time import sleep
 
-refresh_delay = 10
+refresh_delay = 20
 email_account = "bytemetest69@gmail.com"
 email_password = "jxgmdufkfjmxaeie"
 imap_server = "imap.gmail.com"
@@ -26,9 +26,6 @@ def process_email(data):
         "To": msg["To"],
         "Content": content
     }
-    print(msg.as_string)
-    print(msg_json)
-    exit()
 
 def check_mail(conn):
     print("Checking for new messages...")
