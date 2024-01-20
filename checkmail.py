@@ -12,13 +12,10 @@ imap_server = "imap.gmail.com"
     
 def process_email(data):
     msg = email.message_from_bytes(data[0][1])
-    if msg.is_multipart():
-        content = []
-        for part in msg.walk():
-            if part.get_content_type() == 'text/plain':
-                content.append(part.get_payload(decode=True))
-    else:
-        content = msg.get_payload(decode=True).replace("\r", "").replace("\n", " ").replace("\t", " ")
+    content = []
+    for part in msg.walk():
+        if part.get_content_type() == 'text/plain':
+            content.append(part.get_payload(decode=True))
     msg_json = {
         "Message-ID": msg["Message-ID"],
         "Date": msg["Date"],
