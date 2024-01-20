@@ -1,14 +1,17 @@
 from flask import Flask
 from flask import request
 from db import Repository
-from celery_config import make_celery
+from celery_config import create_celery_app
 
 app = Flask(__name__)
 app.config.update(
     CELERY_BROKER_URL='pyamqp://guest@rabbitmq//',  # Updated to use the Docker Compose service name for RabbitMQ
     CELERY_RESULT_BACKEND='rpc://'
 )
-celery = make_celery(app)
+celery = create_celery_app(app)
+
+import tasks  # Import tasks
+
 
 # Use the Docker Compose service name 'mongodb' as the host
 db = Repository("mongodb://mongodb:27017/")  
@@ -32,6 +35,12 @@ def user_exists():
     if not db.user_exists(email):
         return "Not found", 404
     return email
+
+
+@app.route('/add/<int:x>/<int:y>')
+def add_task(x, y):
+    result = tasks.add.delay(x, y)
+    return f"Task enqueued, ID: {result.id}"
 
 
 if __name__ == '__main__':

@@ -1,6 +1,7 @@
+# celery_config.py
 from celery import Celery
 
-def make_celery(app):
+def create_celery_app(app):
     celery = Celery(
         app.import_name,
         backend=app.config['CELERY_RESULT_BACKEND'],
