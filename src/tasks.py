@@ -48,7 +48,7 @@ def process_email(recv_email, email_owner):
     msgs = recv_email["Content"][0].split(b'\xe2\x80\xaf')
     for i in range(len(msgs)):
         if isinstance(msgs[i], bytes):
-            msgs[i] = msgs[i].decode('utf-8')
+            msgs[i] = msgs[i].decode('utf-8', errors="replace")
     replies = assistant.get_reply(email_owner, recv_email["Subject"], "".join(msgs[0:min(len(msgs), 2)]), recv_email["From"], recv_email["To"])
     
     # if reply["spam"]:
