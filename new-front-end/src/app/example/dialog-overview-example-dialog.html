@@ -1,7 +1,7 @@
-<h1 mat-dialog-title>{{data.subject}}</h1>
+<h1 mat-dialog-title>{{data.from}} <br> {{data.subject}} </h1>
 <div mat-dialog-content class="custom-dialog-content">
   <!-- You can style this part to look like an email content -->
-  <p class="email-content">{{data.content}}</p>
+  <p class="email-content" style="line-height:30px; height: 300px; overflow-y: scroll;">{{data.content}}</p>
     <hr>
   <mat-form-field class="full-width-input" style="width: 100%;">
 
@@ -9,7 +9,7 @@
     <textarea matInput [(ngModel)]="data.reply" rows="5" cols="50"></textarea>
   </mat-form-field>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button cdkFocusInitial>Send</button>
+<div mat-dialog-actions class="footer">
+  <button mat-button class="footer" (click)="onNoClick()">Cancel</button>
+  <button mat-raised-button class="footer" color="primary" cdkFocusInitial>Reply</button>
 </div>

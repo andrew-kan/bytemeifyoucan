@@ -30,8 +30,9 @@
 .avatar {
   background-color: #3498db; /* Your avatar circle color */
   border-radius: 50%;
-  width: 60px; /* Set the size of the avatar circle */
-  height: 60px; /* Set the size of the avatar circle */
+  width: 75px; /* Set the size of the avatar circle */
+  height: 60px;
+  margin-right: 5px; /* Set the size of the avatar circle */
   margin-bottom: 8px;
   
 }
@@ -44,6 +45,15 @@ text-overflow: ellipsis " [..]";
 width: 90%;
   white-space: nowrap; /* Keep the text on a single line */
   text-overflow: ellipsis; /* Add ellipsis at the end of the overflow */
+}
+
+.side-text {
+  width:90%;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+  text-overflow: ellipsis ellipsis;
+
 }
 
 

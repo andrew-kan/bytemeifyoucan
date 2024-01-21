@@ -8,11 +8,29 @@
       width: 100%; 
     }
   }
-  
+
+  .footer {
+    padding:5px;
+  }
+
+  .email-content {
+    max-height: 400px;
+    overflow-x: scroll;
+  }
   ::ng-deep .mat-dialog-container {
     max-width: 80vw;
     width: auto; 
   }
+
+  mat-dialog-actions.footer button {
+    margin-bottom: 4px; /* For example, if you want some space between buttons */
+  }
+
+  mat-dialog-actions.footer {
+    padding: 20px; /* Adjust the padding as needed */
+  }
+  
+  
 
 
   mat-dialog-content {
