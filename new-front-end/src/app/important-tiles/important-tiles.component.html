@@ -1,14 +1,14 @@
 
-<div class="tile">
+<div class="tile text-ellipsis">
   <!-- ... avatar and content ... -->
   <div class="content">
     <div class="avatar">
-      <app-avatar [inputString]="name"></app-avatar>
+      <app-avatar [inputString]="subject"></app-avatar>
     </div>
 
     <div>
-      <h4>{{name}}</h4>
-      <p>Coffee tomorrow?</p>
+      <h4>{{extractName(name)}}</h4>
+      <p class="text-ellipsis">{{subject}}</p>
   
     </div>
 
@@ -16,7 +16,7 @@
 
   </div>
   <div class="actions">
-    <dialog-overview-example></dialog-overview-example>
+    <dialog-overview-example [email]="email"></dialog-overview-example>
 
     <button mat-stroked-button color="primary" >I'd love to!</button>
     <button mat-stroked-button color="primary">Later</button>

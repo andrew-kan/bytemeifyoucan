@@ -36,6 +36,17 @@
   
 }
 
+.text-ellipsis {
+
+  text-overflow: clip;
+text-overflow: ellipsis ellipsis;
+text-overflow: ellipsis " [..]";
+width: 90%;
+  white-space: nowrap; /* Keep the text on a single line */
+  text-overflow: ellipsis; /* Add ellipsis at the end of the overflow */
+}
+
+
 .title {
   font-weight: bold;
   margin-bottom: 4px;

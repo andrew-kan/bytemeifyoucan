@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, Input} from '@angular/core';
 import {
   MatDialog,
   MAT_DIALOG_DATA,
@@ -14,9 +14,10 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 
 export interface DialogData {
-  animal: string;
-  name: string;
-  response:string;
+  subject: string;
+  content: string;
+  reply:string;
+  from:string;
 }
 
 /**
@@ -30,21 +31,20 @@ export interface DialogData {
   imports: [MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule],
 })
 export class DialogOverviewExample {
-  animal = "ddddd";
-  name = "fddd";
+
+  @Input() email!:any;
 
   constructor(public dialog: MatDialog) {}
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
         width: '800px', // Set the width you want
-        data: {name: 'User', response: ''}
+        data: {subject: this.email.subject, content: this.email.content, reply:this.email.reply, from:this.email.from}
       });
       
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.animal = result;
     });
   }
 }

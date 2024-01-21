@@ -5,8 +5,9 @@ import { routes } from './app.routes';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { GridComponent } from './grid/grid.component';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideHttpClient } from '@angular/common/http';
 
-export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideAnimations()]
+export const appConfig: ApplicationConfig = {   
+  providers: [provideRouter(routes), provideHttpClient(), provideAnimations()]
 };
 bootstrapApplication(GridComponent)

@@ -12,4 +12,16 @@ import {MatButtonModule} from '@angular/material/button';
 })
 export class ImportantTilesComponent {
   @Input() name!:string
+  @Input() subject!:string
+  @Input() email!:any;
+
+
+  extractName(email: string): string {
+    const match = email.match(/^(.*)\s<.*>$/);
+    if (match && match.length > 1) {
+      return match[1]; // This will be "Byteme Test"
+    }
+    return email; // Return the original string if no match is found
+  }
+  
 }
