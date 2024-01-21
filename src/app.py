@@ -7,6 +7,9 @@ from celery_config import create_celery_app
 
 load_dotenv()
 
+# Use the Docker Compose service name 'mongodb' as the host
+db = Repository("mongodb://mongodb:27017/")  
+
 app = Flask(__name__)
 app.config.update(
     CELERY_BROKER_URL='pyamqp://guest@rabbitmq//',  # Updated to use the Docker Compose service name for RabbitMQ
@@ -16,10 +19,6 @@ celery = create_celery_app(app)
 assistant = Assistant(os.getenv('OPENAI_API_KEY'), os.getenv('ASSISTANT_ID'), db)
 
 import tasks  # Import tasks
-
-
-# Use the Docker Compose service name 'mongodb' as the host
-db = Repository("mongodb://mongodb:27017/")  
 
 @app.route('/')
 def home():

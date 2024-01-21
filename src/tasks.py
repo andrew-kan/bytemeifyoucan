@@ -16,5 +16,7 @@ def add(x, y):
 
 @celery.task
 def process_email(email_obj):
+
+    emails_collection.insert_one(email_obj)
     
-    return "I am an email"  # or return some meaningful result
+    return "pushed email"  # or return some meaningful result
