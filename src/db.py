@@ -10,8 +10,11 @@ class Repository():
         self.db = self.client[db_name]
 
         # Tables
-        self.users = self.db["users"]
+        self.users = self.db["Users"]
         self.users.create_index("email", unique=True)
+
+        self.emails = self.db["Emails"]
+        self.emails.create_index("email", unique=True)
 
     def create_user(self, name, email, thread_id):
         try:
@@ -30,7 +33,8 @@ class Repository():
     def get_user(self, email):
         return self.users.find_one({ "email": email })
 
-    def set_status(self, user, status):
+    def set_user_status(self, user, status):
         self.users.update_one(user, { "$set": { "status": status } })
+    
 
     
