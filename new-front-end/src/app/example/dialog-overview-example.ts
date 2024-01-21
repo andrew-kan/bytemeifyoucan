@@ -94,7 +94,9 @@ export class DialogOverviewExampleDialog {
   }
 
   sendReply(){
-    this.emailService.send_reply(this.data.emailobj, this.data.reply)
+    this.emailService.send_reply(this.data.emailobj, this.data.reply).subscribe(response => {
+      console.log("called");
+    })
   }
 }
 
