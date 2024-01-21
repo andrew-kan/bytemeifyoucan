@@ -21,6 +21,7 @@ def send_email(subject, body, recipient):
 
 def reply_to_email(original, reply_msg):
     reply = email.message.EmailMessage()
+    original = original["email"]
     original["Message-ID"] = original["Message-ID"].replace("\r\n ", "")
     reply["From"] = from_address
     reply["To"] = original["Reply-To"] or original["From"]
