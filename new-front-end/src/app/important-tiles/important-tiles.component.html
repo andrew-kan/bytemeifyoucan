@@ -19,6 +19,6 @@
     <dialog-overview-example [email]="email"></dialog-overview-example>
 
     <button mat-stroked-button color="primary" >{{email['status']}}</button>
-    <button mat-stroked-button color="primary">Later</button>
+    <button mat-stroked-button color="primary" (click)="sendMail()">Later</button>
   </div>
 </div>
