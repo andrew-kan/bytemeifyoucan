@@ -116,7 +116,7 @@ def reply():
     # sendmail.reply_to_email(dataform["original"], dataform["replymsg"])
     original = {'Message-ID': '\r\n <YQBPR0101MB4354C90BEC62FC9B6D395515A6762@YQBPR0101MB4354.CANPRD01.PROD.OUTLOOK.COM>', 'Date': 'Sun, 21 Jan 2024 13:14:02 +0000', 'Content-Type': 'multipart/alternative;\r\n\tboundary="_000_YQBPR0101MB4354C90BEC62FC9B6D395515A6762YQBPR0101MB4354_"', 'Subject': 'Hello', 'From': 'Eduard Anton <eduard.anton@mail.mcgill.ca>', 'Reply-To': None, 'To': '"bytemetest69@gmail.com" <bytemetest69@gmail.com>', 'Content': [b'Hello,\r\n\r\nHow are you doing buddy? Let me know if you plan to go to the event next week.\r\n\r\n\r\nCheers,\r\nEd\r\n']}
     replymsg = "Yes. This is not an automated reply."
-    sendmail.reply_to_email()
+    sendmail.reply_to_email(original, replymsg)
     
 #     if not "email" in dataform:
 #         return "Missing email", 403
