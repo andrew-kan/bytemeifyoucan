@@ -14,8 +14,8 @@
   }
 
   .email-content {
-    max-height: 400px;
-    overflow-x: scroll;
+    max-height: 200px;
+    overflow-y: scroll;
   }
   ::ng-deep .mat-dialog-container {
     max-width: 80vw;
