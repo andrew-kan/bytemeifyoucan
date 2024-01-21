@@ -5,6 +5,6 @@ RUN mv mongodb-linux-x86_64-3.6.7/ /mongodb/
 RUN mkdir -p /mongodb/db && mkdir -p /mongodb/log
 COPY ./src/ /backend
 RUN pip install -r /backend/requirements.txt
-WORKDIR /backend
+WORKDIR /backend/src
 CMD ["bash", "start.sh"]
 EXPOSE 8080

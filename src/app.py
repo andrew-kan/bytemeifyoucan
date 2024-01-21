@@ -3,12 +3,23 @@ from db import Repository
 import os
 from dotenv import load_dotenv
 from assistant import Assistant
+from celery_config import create_celery_app
 
 load_dotenv()
 
 app = Flask(__name__)
-db = Repository("mongodb://localhost:27017/")
+app.config.update(
+    CELERY_BROKER_URL='pyamqp://guest@rabbitmq//',  # Updated to use the Docker Compose service name for RabbitMQ
+    CELERY_RESULT_BACKEND='rpc://'
+)
+celery = create_celery_app(app)
 assistant = Assistant(os.getenv('OPENAI_API_KEY'), os.getenv('ASSISTANT_ID'), db)
+
+import tasks  # Import tasks
+
+
+# Use the Docker Compose service name 'mongodb' as the host
+db = Repository("mongodb://mongodb:27017/")  
 
 @app.route('/')
 def home():
@@ -74,4 +85,10 @@ def test():
     print(msgs)
     return "OK"
 
-app.run(host='0.0.0.0', port=8080)
+@app.route('/add/<int:x>/<int:y>')
+def add_task(x, y):
+    result = tasks.add.delay(x, y)
+    return f"Task enqueued, ID: {result.id}"
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080)

@@ -1,4 +1,6 @@
+celery
 flask
 pymongo
 gunicorn
 openai
+requests

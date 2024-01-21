@@ -1,7 +1,7 @@
 import pymongo
 
 class Repository():
-    def __init__(self, path="mongodb://localhost:27017/", db_name="mydatabase", flush_db=True):
+    def __init__(self, path="mongodb://mongodb:27017/", db_name="mydatabase", flush_db=True):
         self.client = pymongo.MongoClient(path)
 
         # Init database
