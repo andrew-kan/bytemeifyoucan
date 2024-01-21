@@ -10,6 +10,7 @@
     transition: box-shadow 0.3s ease;
     position: relative; /* Needed for absolute positioning of the expand icon */
     overflow: hidden; /* Ensures the expand icon does not push the bounds of the tile */
+    max-width: 250px;
   }
   
   /* Hover state for the tile */
