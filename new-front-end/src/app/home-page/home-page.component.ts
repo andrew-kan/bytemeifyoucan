@@ -6,6 +6,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { MatNativeDateModule } from '@angular/material/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { EmailService } from '../email.service';
 @Component({
   selector: 'app-home-page',
   standalone: true,
@@ -15,7 +16,22 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 })
 export class HomePageComponent {
 
+  constructor(private emailService:EmailService) {
 
+  }
+
+  isloading:boolean = true;
+
+  allEmails:any;
+
+  ngOnInit(){
+
+    this.isloading = true
+    this.emailService.get_emails().subscribe(response => {
+      this.isloading = false;
+      this.allEmails = response;
+    })
+  }
 
   
 }

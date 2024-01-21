@@ -29,10 +29,20 @@
     color: #333;
     font-size: 12px;
   }
+
+  .content {
+    width:90%;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: nowrap;
+    text-overflow: ellipsis " [..]";
+    margin-right: 30px;
+  
+  }
   
   .content p {
     margin: 4px 0;
-    color: #555;
+    color: #000;
     font-size: 14px;
   }
   

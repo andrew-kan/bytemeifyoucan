@@ -1,6 +1,6 @@
 <div class="side-panel-container">
   <h2>Other</h2>
 <div class="grid">
-    <app-notice-tiles *ngFor="let tile of tiles"></app-notice-tiles>
+    <app-notice-tiles *ngFor="let tile of allEmails" [tile]="tile"></app-notice-tiles>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ImportantTilesComponent } from '../important-tiles/important-tiles.component';
 
@@ -13,7 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
 })
 export class GridComponent {
 
-  allEmails:any;
+  @Input() allEmails:any
+
 
   constructor(private emailService:EmailService){}
 

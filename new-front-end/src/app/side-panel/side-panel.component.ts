@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NoticeTilesComponent } from '../notice-tiles/notice-tiles.component';
+import { EmailService } from '../email.service';
 @Component({
   selector: 'app-side-panel',
   standalone: true,
@@ -9,6 +10,9 @@ import { NoticeTilesComponent } from '../notice-tiles/notice-tiles.component';
   styleUrl: './side-panel.component.css'
 })
 export class SidePanelComponent {
-  tiles = Array(9).fill(null); // Replace with your actual tile data
 
+  @Input() allEmails:any;
+
+
+  
 }

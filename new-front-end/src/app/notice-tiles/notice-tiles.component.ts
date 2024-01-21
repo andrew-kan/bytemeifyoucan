@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-notice-tiles',
@@ -8,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './notice-tiles.component.css'
 })
 export class NoticeTilesComponent {
-  tiles = Array(9).fill(null); // Replace with your actual tile data
+  @Input() tile:any;
+
+
+  isNotice(category:string){
+    return category != "notice"
+  }
 }
