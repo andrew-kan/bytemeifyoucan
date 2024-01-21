@@ -6,6 +6,7 @@ from assistant import Assistant
 from celery_config import create_celery_app
 from bson.json_util import dumps
 from db import Repository
+from flask_cors import CORS
 
 
 
@@ -17,6 +18,7 @@ load_dotenv()
 # db = Repository("mongodb://mongodb:27017/", flush_db=False)  
 
 app = Flask(__name__)
+CORS(app)
 app.config.update(
     CELERY_BROKER_URL='pyamqp://guest@rabbitmq//',  # Updated to use the Docker Compose service name for RabbitMQ
     CELERY_RESULT_BACKEND='rpc://'
@@ -91,7 +93,7 @@ def get_emails():
     return dumps(res)
 
 
-@app.route('/getallemails', methods=['GET'])
+@app.route('/api/getallemails', methods=['GET'])
 def get_all_emails():
     emails = db.get_all_email()
     to_return  = []
@@ -99,7 +101,7 @@ def get_all_emails():
     for email in emails:
         to_return.append({"subject":email["Subject"], "from":email["From"], "content":"MOCK CONTENT", "reply":"I love it", "option1":"Yes", "option2":"no", "category":"sussy"})
 
-    return jsonify(to_return), 200
+    return jsonify(to_return)
     
 
 

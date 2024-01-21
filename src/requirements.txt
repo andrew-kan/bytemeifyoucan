@@ -5,3 +5,4 @@ pymongo
 gunicorn
 openai
 requests
+flask-cors
