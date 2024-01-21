@@ -49,15 +49,15 @@ def process_email(recv_email, email_owner):
     for i in range(len(msgs)):
         if isinstance(msgs[i], bytes):
             msgs[i] = msgs[i].decode('utf-8')
-    reply = assistant.get_reply(email_owner, recv_email["Subject"], "".join(msgs[0:min(len(msgs), 2)]), recv_email["From"], recv_email["To"])
+    replies = assistant.get_reply(email_owner, recv_email["Subject"], "".join(msgs[0:min(len(msgs), 2)]), recv_email["From"], recv_email["To"])
     
-    if reply["spam"]:
-        print("Spam detected, no reply returned")
-        db.create_email(email_owner, "scam", recv_email, "")
-    else:
-        db.create_email(email_owner, "pending", recv_email, reply["reply"])
+    # if reply["spam"]:
+    #     print("Spam detected, no reply returned")
+    #     db.create_email(email_owner, "scam", recv_email, "")
+    # else:
+    db.create_email(email_owner, "pending", recv_email, replies)
 
-    return str(reply)
+    return str(replies)
 
 @celery.task
 def get_emails(email, status):

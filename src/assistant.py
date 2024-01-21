@@ -16,7 +16,7 @@ class Assistant():
         if user == None:
             return None
         else:
-            return str(user)
+            return user
 
     def run_is_completed(self, thread_id, run_id):
         run = self.client.beta.threads.runs.retrieve(
@@ -32,6 +32,7 @@ class Assistant():
         thread_id = user["thread"]
         status = user["status"]
         today = datetime.today().strftime('%Y-%m-%d')
+        print(name, thread_id, status, today)
 
         message = self.client.beta.threads.messages.create(
             thread_id=thread_id,
@@ -53,13 +54,15 @@ class Assistant():
             run_id=run.id
         )
 
-        reply = run.required_action.submit_tool_outputs.tool_calls[0].function.arguments
+        replies = []
+        for i in range(len(run.required_action.submit_tool_outputs.tool_calls)):
+            replies.append(json.loads(run.required_action.submit_tool_outputs.tool_calls[i].function.arguments))
         call_ids = [tool_call.id for tool_call in run.required_action.submit_tool_outputs.tool_calls]
 
         # messages = self.client.beta.threads.messages.list(
         #     thread_id=thread_id
         # )
-        print(reply, call_ids)
+        print(replies, call_ids)
         run = self.client.beta.threads.runs.submit_tool_outputs(
             thread_id=thread_id,
             run_id=run.id,
@@ -71,4 +74,4 @@ class Assistant():
             ]
         )
 
-        return json.loads(reply)
+        return replies
