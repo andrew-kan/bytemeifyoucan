@@ -11,3 +11,7 @@
 .side-panel {
     flex: 10%;
 }
+
+h1 {
+    padding: 1% 0% 0% 2%;
+}
