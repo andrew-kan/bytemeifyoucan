@@ -29,7 +29,7 @@ export class EmailService {
       })
     }
 
-    return this.http.get("http://localhost:8080/email?email=bytemetest69@gmail.com&status=pending", httpOptions);
+    return this.http.get("http://localhost:8080/api/email?email=bytemetest69@gmail.com&status=pending", httpOptions);
   }
 
 

@@ -53,3 +53,5 @@ class Repository():
 
     def get_all_email(self,):
         return list(self.emails_working.find({}))
+    
+
