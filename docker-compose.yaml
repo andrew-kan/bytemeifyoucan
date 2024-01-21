@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    container_name: flask_app
+    command: "/bin/bash start.sh"
+    volumes:
+      - .:/backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - rabbitmq
+      - mongodb
+    environment:
+      - CELERY_BROKER_URL=pyamqp://guest@rabbitmq//
+      - CELERY_RESULT_BACKEND=rpc://
+      - MONGODB_HOSTNAME=mongodb
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    container_name: rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
+  mongodb:
+    image: mongo:3.6.7
+    container_name: mongodb
+    volumes:
+      - mongodb_data_container:/data/db
+    ports:
+      - "27017:27017"
+
+  celery_worker:
+    build: .
+    container_name: celery_worker
+    command: celery -A app.celery worker --loglevel=info
+    volumes:
+      - .:/backend
+    depends_on:
+      - web
+      - rabbitmq
+    environment:
+      - CELERY_BROKER_URL=pyamqp://guest@rabbitmq//
+      - CELERY_RESULT_BACKEND=rpc://
+      - MONGODB_HOSTNAME=mongodb
+
+  mail_checker:
+    build: .
+    container_name: mail_checker
+    command: python checkmail.py
+    volumes:
+    - .:/backend
+    depends_on:
+      - web
+      - rabbitmq
+      - mongodb
+    
+
+volumes:
+  mongodb_data_container:
