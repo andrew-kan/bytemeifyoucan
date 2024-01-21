@@ -2,3 +2,4 @@ celery
 flask
 pymongo
 gunicorn
+requests
