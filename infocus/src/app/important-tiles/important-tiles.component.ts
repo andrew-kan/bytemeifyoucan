@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AvatarComponent } from '../avatar/avatar.component';
 @Component({
   selector: 'app-important-tiles',
@@ -8,5 +8,5 @@ import { AvatarComponent } from '../avatar/avatar.component';
   styleUrl: './important-tiles.component.css'
 })
 export class ImportantTilesComponent {
-
+  @Input() name!:string
 }
