@@ -20,7 +20,7 @@ export class EmailService {
 
 
   get_emails(){
-    const endPoint = `${this.url}getallemails`
+    const endPoint = `${this.url}email?email=bytemetest69@gmail.com&status=pending`
 
 
     const httpOptions = {
@@ -29,7 +29,7 @@ export class EmailService {
       })
     }
 
-    return this.http.get("http://localhost:8080/api/email?email=bytemetest69@gmail.com&status=pending", httpOptions);
+    return this.http.get(endPoint, httpOptions);
   }
 
 
