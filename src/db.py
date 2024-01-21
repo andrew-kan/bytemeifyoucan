@@ -13,13 +13,24 @@ class Repository():
         self.users = self.db["users"]
         self.users.create_index("email", unique=True)
 
-    def create_user(self, name, email):
+    def create_user(self, name, email, thread_id):
         try:
-            return self.users.insert_one({"name": name, "email": email})
+            return self.users.insert_one({"name": name, 
+                                            "email": email, 
+                                            "thread": thread_id,
+                                            "msgs": [],
+                                            "status": ""
+                                        })
         except pymongo.errors.DuplicateKeyError:
             return None
 
     def user_exists(self, email):
         return self.users.find_one({ "email": email }) != None
+
+    def get_user(self, email):
+        return self.users.find_one({ "email": email })
+
+    def set_status(self, user, status):
+        self.users.update_one(user, { "$set": { "status": status } })
 
     
