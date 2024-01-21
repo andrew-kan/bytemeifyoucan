@@ -4,6 +4,10 @@ import os
 import email
 import sys
 from time import sleep
+from celery_config import create_celery_app
+app = create_celery_app(None)
+# Import tasks
+import tasks
 
 refresh_delay = 20
 email_account = "bytemetest69@gmail.com"
@@ -26,6 +30,7 @@ def process_email(data):
         "To": msg["To"],
         "Content": content
     }
+    tasks.process_email.delay(msg_json)
 
 def check_mail(conn):
     print("Checking for new messages...")
@@ -44,6 +49,7 @@ def check_mail(conn):
     conn.close()
 
 def fetching_loop():
+    print("CHECKING MAIL :)")
     conn = imaplib.IMAP4_SSL(imap_server)
     conn.login(email_account, email_password)
 
