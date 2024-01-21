@@ -12,12 +12,14 @@ import {MatButtonModule} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { EmailService } from '../email.service';
 
 export interface DialogData {
   subject: string;
   content: string;
   reply:string;
   from:string;
+  emailobj:any;
 }
 
 /**
@@ -34,12 +36,12 @@ export class DialogOverviewExample {
 
   @Input() email!:any;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private emailService:EmailService) {}
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
         width: '800px', // Set the width you want
-        data: {subject: this.email['email']['Subject'], content: this.decodeBase64(this.email['email']['Content'][0]['$binary']["base64"]), reply:this.email["reply"][0]["reply"], from:this.email["email"]["From"]}
+        data: {subject: this.email['email']['Subject'], content: this.decodeBase64(this.email['email']['Content'][0]['$binary']["base64"]), reply:this.email["reply"][0]["reply"], from:this.email["email"]["From"], emailobj:this.email}
       });
       
 
@@ -84,10 +86,15 @@ export class DialogOverviewExampleDialog {
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
+   private emailService:EmailService
   ) {}
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  sendReply(){
+    this.emailService.send_reply(this.data.emailobj, this.data.reply)
   }
 }
 
