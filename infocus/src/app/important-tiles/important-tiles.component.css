@@ -1,24 +1,47 @@
 .tile {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     background-color: white;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     padding: 16px;
-    max-width: 400px;
     font-family: Arial, sans-serif;
+    transition: box-shadow 0.3s ease;
+    position: relative; /* Needed for absolute positioning of the expand icon */
+    overflow: hidden; /* Ensures the expand icon does not push the bounds of the tile */
+  }
+  
+  /* Hover state for the tile */
+  .tile:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Elevated shadow effect */
+  }
+  
+  /* Expand icon styling */
+  .expand-icon {
+    display: none; /* Hide by default */
+    color: rgba(0,0,0,0.54); /* Material Icon default color */
+    user-select: none; /* Prevent text selection */
+  }
+  
+  /* Show the expand icon on hover */
+  .tile:hover .expand-icon {
+    display: block;
   }
   
   .avatar {
-    background-color: #3498db;
-    color: white;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 16px;
+    /* The avatar is now a container for the app-avatar component */
+    margin-right: 16px; /* Space between avatar and content */
+  }
+  
+  /* The app-avatar component should define its own styles for the image,
+     but you can define a size for the container to ensure consistency */
+  .avatar app-avatar {
+    display: block;
+    width: 50px; /* Adjust the size as needed */
+    height: 50px; /* Adjust the size as needed */
+    border-radius: 50%; /* Makes it circular */
+    overflow: hidden; /* Ensures nothing goes outside the circle */
   }
   
   .content h4 {
@@ -44,6 +67,4 @@
   .actions button:last-child {
     background-color: #95a5a6;
   }
-  
-  /* Additional styling for 'new' badge and other details can be added here */
   
