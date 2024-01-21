@@ -21,14 +21,15 @@ def send_email(subject, body, recipient):
 
 def reply_to_email(original, reply_msg):
     reply = email.message.EmailMessage()
+    original["Message-ID"] = original["Message-ID"].replace("\r\n ", "")
+    reply["From"] = from_address
     reply["To"] = original["Reply-To"] or original["From"]
     reply["Subject"] = "Re: " + original["Subject"]
-    reply["In_Reply-To"] = original["Message-Id"]
-    reply["References"] = (original["References"] or "") + " " + original["Message-Id"]
-    reply.set_content("This is the reply text.")
+    reply["In-Reply-To"] = original["Message-ID"]
+    reply["References"] = original["Message-ID"]
+    reply.set_content(reply_msg)
 
     with smtplib.SMTP_SSL(smtp_server, 465) as smtp:
         smtp.login(email_account, email_password)
         smtp.send_message(reply)
     print("Reply sent!")
-
