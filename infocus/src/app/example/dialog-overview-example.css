@@ -24,4 +24,8 @@
     width:100%; /* Make sure this is set to 0 or an appropriate value */
   }
   
+  button {
+    width:100%;
+    margin-bottom: 4px;
+  }
   
