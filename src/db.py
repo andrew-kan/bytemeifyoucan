@@ -15,6 +15,8 @@ class Repository():
 
         self.emails = self.db["Emails"]
 
+        self.emails_working = self.db["emails"]
+
     def create_user(self, name, email, thread_id):
         try:
             return self.users.insert_one({"name": name, 
@@ -48,4 +50,6 @@ class Repository():
     def get_emails(self, owner, status):
         return self.emails.find({"owner": owner, "status": status})
 
-    
+
+    def get_all_email(self,):
+        return list(self.emails_working.find({}))

@@ -5,6 +5,11 @@ from dotenv import load_dotenv
 from assistant import Assistant
 from celery_config import create_celery_app
 from bson.json_util import dumps
+from db import Repository
+
+
+
+db = Repository(flush_db=False)
 
 load_dotenv()
 
@@ -84,6 +89,19 @@ def get_emails():
     status = request.args.get('status', default = "pending", type = str)
     res = tasks.get_emails(email, status)
     return dumps(res)
+
+
+@app.route('/getallemails', methods=['GET'])
+def get_all_emails():
+    emails = db.get_all_email()
+    to_return  = []
+    #skipping content because at this time encoding is weird in my version of the db.
+    for email in emails:
+        to_return.append({"subject":email["Subject"], "from":email["From"], "content":"MOCK CONTENT", "reply":"I love it", "option1":"Yes", "option2":"no", "category":"sussy"})
+
+    return jsonify(to_return), 200
+    
+
 
 # @app.route('/reply', methods=['POST'])
 # def reply():
