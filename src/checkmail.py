@@ -14,7 +14,7 @@ email_account = "bytemetest69@gmail.com"
 email_password = "jxgmdufkfjmxaeie"
 imap_server = "imap.gmail.com"
     
-def process_email(data):
+def process_email(data, email_account):
     msg = email.message_from_bytes(data[0][1])
     content = []
     for part in msg.walk():
@@ -30,7 +30,7 @@ def process_email(data):
         "To": msg["To"],
         "Content": content
     }
-    tasks.process_email.delay(msg_json)
+    tasks.process_email.delay(msg_json, email_account)
 
 def check_mail(conn):
     print("Checking for new messages...")
@@ -43,7 +43,7 @@ def check_mail(conn):
             for num in messages[0].decode("utf-8").split(' '):
                 # print('Processing : #', num)
                 typ, data = conn.fetch(num,'(RFC822)')
-                process_email(data)
+                process_email(data, email_account)
                 typ, data = conn.store(num,'+FLAGS','\\Seen')
             print("Finished fetching new messages.")
     conn.close()

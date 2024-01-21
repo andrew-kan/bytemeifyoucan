@@ -1,9 +1,10 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from db import Repository
 import os
 from dotenv import load_dotenv
 from assistant import Assistant
 from celery_config import create_celery_app
+from bson.json_util import dumps
 
 load_dotenv()
 
@@ -36,6 +37,7 @@ def new_user():
         name = dataform['name']
 
         user = tasks.create_user.delay(email, name)
+        print(user)
         if user == None:
             return "User already exists", 403
         else:
@@ -75,6 +77,13 @@ def user_exists():
     if not tasks.user_exists.delay(email):
         return "Not found", 404
     return email
+
+@app.route('/email', methods=['GET'])
+def get_emails():
+    email = request.args.get('email', default = "", type = str)
+    status = request.args.get('status', default = "pending", type = str)
+    res = tasks.get_emails(email, status)
+    return dumps(res)
 
 # @app.route('/reply', methods=['POST'])
 # def reply():

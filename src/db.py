@@ -14,14 +14,12 @@ class Repository():
         self.users.create_index("email", unique=True)
 
         self.emails = self.db["Emails"]
-        self.emails.create_index("email", unique=True)
 
     def create_user(self, name, email, thread_id):
         try:
             return self.users.insert_one({"name": name, 
                                             "email": email, 
                                             "thread": thread_id,
-                                            "msgs": [],
                                             "status": ""
                                         })
         except pymongo.errors.DuplicateKeyError:
@@ -36,5 +34,18 @@ class Repository():
     def set_user_status(self, user, status):
         self.users.update_one(user, { "$set": { "status": status } })
     
+    def create_email(self, owner, status, recv_email, reply):
+        try:
+            return self.emails.insert_one({"owner": owner, 
+                                            "status": status, 
+                                            "email": recv_email,
+                                            "reply": reply
+                                        })
+        except Exception as e:
+            print(f"Error happened: {e}")
+            return None
+    
+    def get_emails(self, owner, status):
+        return self.emails.find({"owner": owner, "status": status})
 
     

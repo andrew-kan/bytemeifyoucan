@@ -1,6 +1,7 @@
 from openai import OpenAI
 from datetime import datetime
 import time
+import json
 
 class Assistant():
     def __init__(self, openai_key, assistant_id, repo):
@@ -12,7 +13,10 @@ class Assistant():
     def create_user(self, email, name):
         thread = self.client.beta.threads.create()
         user = self.db.create_user(name, email, thread.id)
-        return user
+        if user == None:
+            return None
+        else:
+            return str(user)
 
     def run_is_completed(self, thread_id, run_id):
         run = self.client.beta.threads.runs.retrieve(
@@ -50,12 +54,12 @@ class Assistant():
         )
 
         reply = run.required_action.submit_tool_outputs.tool_calls[0].function.arguments
-        call_id = run.required_action.submit_tool_outputs.tool_calls[0].id
+        call_ids = [tool_call.id for tool_call in run.required_action.submit_tool_outputs.tool_calls]
 
         # messages = self.client.beta.threads.messages.list(
         #     thread_id=thread_id
         # )
-
+        print(reply, call_ids)
         run = self.client.beta.threads.runs.submit_tool_outputs(
             thread_id=thread_id,
             run_id=run.id,
@@ -63,8 +67,8 @@ class Assistant():
                 {
                     "tool_call_id": call_id,
                     "output": "{\"success\": \"true\"}",
-                }
+                } for call_id in call_ids
             ]
         )
 
-        return reply
+        return json.loads(reply)
