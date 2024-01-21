@@ -1,0 +1,13 @@
+:host {
+    display: block;
+    width: 100%; /* Full width of the container */
+    height: 100%; /* Full height of the container */
+  }
+  
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%; /* Circular image */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+  }
+  

@@ -1,0 +1,14 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 15px;
+    padding: 0% 1%;
+    /* overflow-y: scroll;
+    box-sizing: content-box;
+    padding-right: 17px; */
+  }
+
+  h2 {
+    padding: 0% 0% 0% 3%;
+    color: rgb(76, 76, 76);
+}

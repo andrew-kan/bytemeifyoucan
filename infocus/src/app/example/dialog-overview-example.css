@@ -1,0 +1,31 @@
+.custom-dialog-content {
+    .email-content {
+      margin-bottom: 20px;
+    
+    }
+  
+    .full-width-input {
+      width: 100%; 
+    }
+  }
+  
+  ::ng-deep .mat-dialog-container {
+    max-width: 80vw;
+    width: auto; 
+  }
+
+
+  mat-dialog-content {
+    padding: 0; /* or any desired padding */
+  }
+  
+  textarea {
+    margin: 0;
+    width:100%; /* Make sure this is set to 0 or an appropriate value */
+  }
+  
+  button {
+    width:100%;
+    margin-bottom: 4px;
+  }
+  

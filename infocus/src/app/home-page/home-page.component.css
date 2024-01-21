@@ -1,0 +1,19 @@
+.home-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px; /* Add padding if needed */
+    height: 80%;
+  }
+
+.main-grid {
+    flex: 70%;
+    overflow: hidden;
+}
+
+.side-panel {
+    flex: 10%;
+}
+
+h1 {
+    padding: 1% 0% 0% 2%;
+}
