@@ -3,12 +3,12 @@
   <!-- ... avatar and content ... -->
   <div class="content">
     <div class="avatar">
-      <app-avatar [inputString]="name"></app-avatar>
+      <app-avatar [inputString]="email['email']['From']"></app-avatar>
     </div>
 
     <div class="side-text">
-      <h4>{{extractName(name)}}</h4>
-      <p class="text-ellipsis">{{subject}}</p>
+      <h4>{{extractName(email['email']['From'])}}</h4>
+      <p class="text-ellipsis">{{email['email']['Subject']}}</p>
   
     </div>
 
@@ -18,7 +18,7 @@
   <div class="actions">
     <dialog-overview-example [email]="email"></dialog-overview-example>
 
-    <button mat-stroked-button color="primary" >I'd love to!</button>
+    <button mat-stroked-button color="primary" >{{email['status']}}</button>
     <button mat-stroked-button color="primary">Later</button>
   </div>
 </div>

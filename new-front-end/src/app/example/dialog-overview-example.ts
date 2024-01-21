@@ -39,13 +39,29 @@ export class DialogOverviewExample {
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
         width: '800px', // Set the width you want
-        data: {subject: this.email.subject, content: this.email.content, reply:this.email.reply, from:this.email.from}
+        data: {subject: this.email['email']['Subject'], content: this.decodeBase64(this.email['email']['Content'][0]['$binary']["base64"]), reply:this.email["reply"][0]["reply"], from:this.email["email"]["From"]}
       });
       
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+  }
+
+
+
+  decodeBase64(b64Encoded:string) {
+    // Decodes the base64 string into an "intermediate" binary string
+    const binaryString = atob(b64Encoded);
+  
+    // Converts the binary string to a UTF-8-encoded string
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    const decodedStr = new TextDecoder('utf-8').decode(bytes);
+  
+    return decodedStr;
   }
 }
 

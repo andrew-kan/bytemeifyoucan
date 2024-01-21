@@ -7,6 +7,7 @@ from celery_config import create_celery_app
 from bson.json_util import dumps
 from db import Repository
 from flask_cors import CORS
+import sendmail
 
 
 
@@ -32,7 +33,7 @@ import tasks  # Import tasks
 def home():
     return "Hello world"
 
-@app.route('/user/new', methods = ['POST'])
+@app.route('/api/user/new', methods = ['POST'])
 def new_user():
     if request.method == 'POST':
         dataform = request.get_json()
@@ -52,7 +53,7 @@ def new_user():
     else:
         return "", 405
 
-@app.route('/user/status', methods = ['GET', 'POST'])
+@app.route('/api/user/status', methods = ['GET', 'POST'])
 def user_status():
 
     if request.method == 'POST':
@@ -78,14 +79,14 @@ def user_status():
     else:
         return "", 405
 
-@app.route('/user/exists', methods=['GET'])
+@app.route('/api/user/exists', methods=['GET'])
 def user_exists():
     email = request.args.get('email', default = "", type = str)
     if not tasks.user_exists.delay(email):
         return "Not found", 404
     return email
 
-@app.route('/email', methods=['GET'])
+@app.route('/api/email', methods=['GET'])
 def get_emails():
     email = request.args.get('email', default = "", type = str)
     status = request.args.get('status', default = "pending", type = str)
@@ -98,16 +99,25 @@ def get_all_emails():
     emails = db.get_all_email()
     to_return  = []
     #skipping content because at this time encoding is weird in my version of the db.
-    for email in emails:
-        to_return.append({"subject":email["Subject"], "from":email["From"], "content":"MOCK CONTENT", "reply":"I love it", "option1":"Yes", "option2":"no", "category":"sussy"})
+    # for email in emails:
+       # to_return.append({"subject":email["Subject"], "category":email.get("cateogry", "important") "from":email["From"], "content":"It is also no secret that I have not been happy with your approach to how you manage me as an employee, and therefore I am formally requesting that you relinquish control of the inventory team to a manager who is able to be on the floor more often and can see what is actually going on, and can see the impact of the workload on each individual in the department on a daily basis and does not need to rely on other people telling you about what is going on in your department. There are job duties that I had done for months before [M - already gone] had started that you have told me I will need to be trained on once things settle down a little, which tells me that you do not really even know what I do/have done while working under you. As we have already discussed, I do not think that it is right that my job role has been changed every few months with no prior discussion beforehand, and no discussion on pay increase with the added responsibility. You have once again basically done the same thing when I asked you if production orders would be a permanent part of my job duties and you told me no, then casually put in an email shortly after that it is a part of my permanent duties now. I do not wish for you to feel personally attacked as you seem like a nice person, and I understood you do a lot at work, but perhaps looking after inventory is too much on top of everything else you do. However, at the end of the day, I do not feel I can continue working under you as my manager, I do not wish to leave the company, but if it comes down to it, I will not continue to work at a place where I am this unhappy and feel like I am getting screwed over and disrespected. I do enjoy the job and am hoping to have a long career within [company] so long as this can get settled."
+    #,# "reply":"I love it", "option1":"Yes", "option2":"no", "category":"sussy"})
 
     return jsonify(to_return)
     
 
 
-# @app.route('/reply', methods=['POST'])
-# def reply():
-#     dataform = request.get_json()
+@app.route('/api/reply', methods=['POST'])
+def reply():
+    dataform = request.get_json()
+
+
+    # original needs to contain messageid, from, subject
+    # sendmail.reply_to_email(dataform["original"], dataform["replymsg"])
+    original = {'Message-ID': '\r\n <YQBPR0101MB4354C90BEC62FC9B6D395515A6762@YQBPR0101MB4354.CANPRD01.PROD.OUTLOOK.COM>', 'Date': 'Sun, 21 Jan 2024 13:14:02 +0000', 'Content-Type': 'multipart/alternative;\r\n\tboundary="_000_YQBPR0101MB4354C90BEC62FC9B6D395515A6762YQBPR0101MB4354_"', 'Subject': 'Hello', 'From': 'Eduard Anton <eduard.anton@mail.mcgill.ca>', 'Reply-To': None, 'To': '"bytemetest69@gmail.com" <bytemetest69@gmail.com>', 'Content': [b'Hello,\r\n\r\nHow are you doing buddy? Let me know if you plan to go to the event next week.\r\n\r\n\r\nCheers,\r\nEd\r\n']}
+    replymsg = "Yes. This is not an automated reply."
+    sendmail.reply_to_email(original, replymsg)
+    
 #     if not "email" in dataform:
 #         return "Missing email", 403
 #     email = dataform["email"]

@@ -42,6 +42,8 @@ def user_exists(email):
 
 @celery.task
 def process_email(recv_email, email_owner):
+
+
     if not db.user_exists(email_owner):
         return None
     print(recv_email["Content"])

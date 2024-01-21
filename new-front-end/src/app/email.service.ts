@@ -20,7 +20,7 @@ export class EmailService {
 
 
   get_emails(){
-    const endPoint = `${this.url}getallemails`
+    const endPoint = `${this.url}email?email=bytemetest69@gmail.com&status=pending`
 
 
     const httpOptions = {
@@ -29,9 +29,25 @@ export class EmailService {
       })
     }
 
-    return this.http.get("http://localhost:8080/api/getallemails", httpOptions);
+    return this.http.get(endPoint, httpOptions);
   }
 
+  send_reply(messageID: string, replymsg: string) {
+    const endPoint = `${this.url}reply`;
 
+    const formData = {
+      "messageID": messageID,
+      "replymsg": replymsg
+    };
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': "none",
+      }),
+    }
+
+    return this.http.post(endPoint, formData, httpOptions);
+
+  }
 
 }
