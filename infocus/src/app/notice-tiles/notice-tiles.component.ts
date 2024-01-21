@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './notice-tiles.component.css'
 })
 export class NoticeTilesComponent {
-
+  tiles = Array(9).fill(null); // Replace with your actual tile data
 }

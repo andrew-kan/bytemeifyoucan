@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SidePanelComponent } from './side-panel.component';
+import { CommonModule } from '@angular/common';
 
 describe('SidePanelComponent', () => {
   let component: SidePanelComponent;
@@ -8,7 +9,7 @@ describe('SidePanelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SidePanelComponent]
+      imports: [SidePanelComponent, CommonModule]
     })
     .compileComponents();
     

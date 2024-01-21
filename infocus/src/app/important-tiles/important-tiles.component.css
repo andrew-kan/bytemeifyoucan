@@ -28,8 +28,9 @@
   /* Show the expand icon on hover */
   .tile:hover .expand-icon {
     display: block;
+
   }
-  
+
   .avatar {
     /* The avatar is now a container for the app-avatar component */
     margin-right: 16px; /* Space between avatar and content */

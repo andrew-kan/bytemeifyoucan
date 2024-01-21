@@ -1,0 +1,13 @@
+.home-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px; /* Add padding if needed */
+  }
+
+.main-grid {
+    flex: 70%;
+}
+
+.side-panel {
+    flex: 10%;
+}
