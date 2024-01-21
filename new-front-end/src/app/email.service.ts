@@ -32,6 +32,22 @@ export class EmailService {
     return this.http.get(endPoint, httpOptions);
   }
 
+  send_reply(messageID: string, replymsg: string) {
+    const endPoint = `${this.url}reply`;
 
+    const formData = {
+      "messageID": messageID,
+      "replymsg": replymsg
+    };
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': "none",
+      }),
+    }
+
+    return this.http.post(endPoint, formData, httpOptions);
+
+  }
 
 }
